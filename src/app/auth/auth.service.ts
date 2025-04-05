@@ -43,7 +43,6 @@ export class AuthService {
   }
 
   login(loginInput: any): Observable<LoginResponse> {
-    console.log(loginInput)
     const graphqlQuery = {
       query: `
         query Login($input: LoginInput!) {
