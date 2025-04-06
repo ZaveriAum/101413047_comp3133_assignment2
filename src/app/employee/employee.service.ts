@@ -46,7 +46,7 @@ export type DeleteEmployeeResponse = GraphQLResponse<{ deleteEmployee: boolean }
   providedIn: 'root',
 })
 export class EmployeeService {
-  private graphqlUrl = 'http://localhost:1111/graphql';
+  private graphqlUrl = 'https://comp3133-101413047-assignment1.onrender.com/graphql';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

@@ -22,7 +22,7 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private graphqlUrl = 'http://localhost:1111/graphql';
+  private graphqlUrl = 'https://comp3133-101413047-assignment1.onrender.com/graphql';
 
   constructor(private http: HttpClient) {}
 
