@@ -1,1 +1,59 @@
-<p>employee-view works!</p>
+<div class="modal">
+    <div class="modal-content">
+      <h2>Employee Details</h2>
+  
+      <div class="profile-section">
+        <img
+          [src]="employee?.employee_photo || `default_employee_photo.jpg`"
+          alt="Employee Photo"
+          class="profile-photo"
+        />
+      </div>
+  
+      <table>
+        <tr>
+          <td><strong>First Name:</strong></td>
+          <td>{{ employee?.first_name }}</td>
+        </tr>
+        <tr>
+          <td><strong>Last Name:</strong></td>
+          <td>{{ employee?.last_name }}</td>
+        </tr>
+        <tr>
+          <td><strong>Email:</strong></td>
+          <td>{{ employee?.email }}</td>
+        </tr>
+        <tr>
+          <td><strong>Gender:</strong></td>
+          <td>{{ employee?.gender }}</td>
+        </tr>
+        <tr>
+          <td><strong>Department:</strong></td>
+          <td>{{ employee?.department }}</td>
+        </tr>
+        <tr>
+          <td><strong>Designation:</strong></td>
+          <td>{{ employee?.designation }}</td>
+        </tr>
+        <tr>
+          <td><strong>Salary:</strong></td>
+          <td>₹{{ employee?.salary | number }}</td>
+        </tr>
+        <tr>
+          <td><strong>Date of Joining:</strong></td>
+          <td>{{ employee?.date_of_joining | date:'fullDate' }}</td>
+        </tr>
+        <tr>
+          <td><strong>Created At:</strong></td>
+          <td>{{ employee?.createdAt | date:'medium' }}</td>
+        </tr>
+        <tr>
+          <td><strong>Updated At:</strong></td>
+          <td>{{ employee?.updatedAt | date:'medium' }}</td>
+        </tr>
+      </table>
+  
+      <button (click)="onClose()">Close</button>
+    </div>
+  </div>
+  
