@@ -1,20 +1,21 @@
-<div class="modal-overlay">
-    <div class="modal-content">
+<div class="add-edit-modal-overlay">
+    <div class="add-edit-modal-content">
       <h2>{{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}</h2>
       <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="first_name">First Name:</label>
-          <input type="text" id="first_name" formControlName="first_name">
-          <div *ngIf="employeeForm.controls['first_name'].invalid && (employeeForm.controls['first_name'].dirty || employeeForm.controls['first_name'].touched)" class="error-message">
-            <div *ngIf="employeeForm.controls['first_name'].errors?.['required']">First Name is required.</div>
+        <div class="row-1">
+          <div class="form-group">
+            <label for="first_name">First Name:</label>
+            <input type="text" class="row-1-input" id="first_name" formControlName="first_name">
+            <div *ngIf="employeeForm.controls['first_name'].invalid && (employeeForm.controls['first_name'].dirty || employeeForm.controls['first_name'].touched)" class="error-message">
+              <div *ngIf="employeeForm.controls['first_name'].errors?.['required']">First Name is required.</div>
+            </div>
+          </div>
+    
+          <div class="form-group">
+            <label for="last_name" >Last Name:</label>
+            <input type="text" class="row-1-input" id="last_name" formControlName="last_name">
           </div>
         </div>
-  
-        <div class="form-group">
-          <label for="last_name">Last Name:</label>
-          <input type="text" id="last_name" formControlName="last_name">
-        </div>
-  
         <div class="form-group">
           <label for="email">Email:</label>
           <input type="email" id="email" formControlName="email">

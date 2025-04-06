@@ -1,52 +1,55 @@
-<h2>Employee List</h2>
+<div class="employee-container">
+  <h2 class="employee-title">Employee List</h2>
 
-<div>
-  <input type="text" [(ngModel)]="searchQuery" placeholder="Search by department or position">
-  <button (click)="searchEmployees()">Search</button>
-  <button (click)="loadEmployees()">Clear Search</button>
+  <div class="employee-actions">
+    <div class="employee-search-group">
+      <input class="search-input" type="text" [(ngModel)]="searchQuery" placeholder="Search by department or position">
+      <button class="btn-search" (click)="searchEmployees()">🔍</button>
+      <button class="top-row-btn" (click)="loadEmployees()">🔄️</button>
+      <button class="top-row-btn" (click)="openAddModal()">➕</button>
+    </div>
+  </div>
+
+  <div class="employee-table-wrapper"> <table class="employee-table">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees">
+          <td data-label="First Name">{{ employee.first_name }}</td>
+          <td data-label="Last Name">{{ employee.last_name }}</td>
+          <td data-label="Email">{{ employee.email }}</td>
+          <td data-label="Actions">
+            <button class="btn" (click)="openViewModal(employee)">View</button>
+            <button class="btn" (click)="openEditModal(employee)">Edit</button>
+            <button class="btn" (click)="deleteEmployee(employee.id!)">Delete</button>
+          </td>
+        </tr>        
+        <tr *ngIf="employees.length === 0">
+          <td colspan="4" class="no-employees">No employees found.</td> </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn logout-btn" (click)="logout()">Logout</button>
+
+  <app-employee-add-edit
+    *ngIf="showAddModal || showEditModal"
+    [isEditMode]="showEditModal"
+    [employee]="selectedEmployee"
+    [employeeId]="editEmployeeId"
+    (close)="closeModal()"
+    (employeeSaved)="closeModal()"
+  ></app-employee-add-edit>
+
+  <app-employee-view
+    *ngIf="showViewModal"
+    [employee]="selectedEmployee"
+    (close)="closeModal()"
+  ></app-employee-view>
 </div>
-
-<button (click)="openAddModal()">Add New Employee</button>
-
-<table>
-  <thead>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Email</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let employee of employees">
-      <td>{{ employee.first_name }}</td>
-      <td>{{ employee.last_name }}</td>
-      <td>{{ employee.email }}</td>
-      <td>
-        <button (click)="openViewModal(employee)">View</button>
-        <button (click)="openEditModal(employee)">Edit</button>
-        <button (click)="deleteEmployee(employee.id!)">Delete</button>
-      </td>
-    </tr>
-    <tr *ngIf="employees.length === 0">
-      <td colspan="6">No employees found.</td>
-    </tr>
-  </tbody>
-</table>
-
-<button (click)="logout()">Logout</button>
-
-<app-employee-add-edit
-  *ngIf="showAddModal || showEditModal"
-  [isEditMode]="showEditModal"
-  [employee]="selectedEmployee"
-  [employeeId]="editEmployeeId"
-  (close)="closeModal()"
-  (employeeSaved)="closeModal()"
-></app-employee-add-edit>
-
-<app-employee-view
-  *ngIf="showViewModal"
-  [employee]="selectedEmployee"
-  (close)="closeModal()"
-></app-employee-view>

@@ -1,0 +1,95 @@
+.view-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .view-modal-content {
+    background: #fff;
+    padding: 2rem;
+    width: 90%;
+    max-width: 550px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    animation: zoomIn 0.25s ease-out;
+    overflow-y: auto;
+    max-height: 90vh;
+  }
+  
+  .view-modal-content h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    color: #222;
+    text-align: center;
+  }
+  
+  .view-modal-content .profile-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .view-modal-content .profile-photo {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+  }
+  
+  .view-modal-content table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .view-modal-content td {
+    padding: 0.5rem 0.75rem;
+    vertical-align: top;
+    font-size: 1rem;
+  }
+  
+  .view-modal-content td:first-child {
+    font-weight: 600;
+    width: 40%;
+    color: #444;
+  }
+  
+  .view-modal-content td:last-child {
+    color: #333;
+  }
+  
+  .view-modal-content button {
+    margin-top: 2rem;
+    padding: 0.6rem 1.5rem;
+    background-color: #666;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+  }
+  
+  .view-modal-content button:hover {
+    background-color: #444;
+  }
+  
+  @keyframes zoomIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
