@@ -1,1 +1,89 @@
-<p>employee-add-edit works!</p>
+<div class="modal-overlay">
+    <div class="modal-content">
+      <h2>{{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}</h2>
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="first_name">First Name:</label>
+          <input type="text" id="first_name" formControlName="first_name">
+          <div *ngIf="employeeForm.controls['first_name'].invalid && (employeeForm.controls['first_name'].dirty || employeeForm.controls['first_name'].touched)" class="error-message">
+            <div *ngIf="employeeForm.controls['first_name'].errors?.['required']">First Name is required.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="last_name">Last Name:</label>
+          <input type="text" id="last_name" formControlName="last_name">
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" formControlName="email">
+          <div *ngIf="employeeForm.controls['email'].invalid && (employeeForm.controls['email'].dirty || employeeForm.controls['email'].touched)" class="error-message">
+            <div *ngIf="employeeForm.controls['email'].errors?.['required']">Email is required.</div>
+            <div *ngIf="employeeForm.controls['email'].errors?.['email']">Invalid email format.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select id="gender" formControlName="gender">
+            <option value="" disabled>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <div *ngIf="employeeForm.controls['gender'].invalid && (employeeForm.controls['gender'].dirty || employeeForm.controls['gender'].touched)" class="error-message">
+            <div *ngIf="employeeForm.controls['gender'].errors?.['required']">Gender is required.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="designation">Designation:</label>
+          <input type="text" id="designation" formControlName="designation">
+          <div *ngIf="employeeForm.controls['designation'].invalid && (employeeForm.controls['designation'].dirty || employeeForm.controls['designation'].touched)" class="error-message">
+            <div *ngIf="employeeForm.controls['designation'].errors?.['required']">Designation is required.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="salary">Salary:</label>
+          <input type="number" id="salary" formControlName="salary">
+          <div *ngIf="employeeForm.controls['salary'].invalid && (employeeForm.controls['salary'].dirty || employeeForm.controls['salary'].touched)" class="error-message">
+            <div *ngIf="employeeForm.controls['salary'].errors?.['required']">Salary is required.</div>
+            <div *ngIf="employeeForm.controls['salary'].errors?.['min']">Salary must be at least 0.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="date_of_joining">Date of Joining:</label>
+          <input type="date" id="date_of_joining" formControlName="date_of_joining">
+          <div *ngIf="employeeForm.controls['date_of_joining'].invalid && (employeeForm.controls['date_of_joining'].dirty || employeeForm.controls['date_of_joining'].touched)" class="error-message">
+            <div *ngIf="employeeForm.controls['date_of_joining'].errors?.['required']">Date of Joining is required.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="department">Department:</label>
+          <input type="text" id="department" formControlName="department">
+          <div *ngIf="employeeForm.controls['department'].invalid && (employeeForm.controls['department'].dirty || employeeForm.controls['department'].touched)" class="error-message">
+            <div *ngIf="employeeForm.controls['department'].errors?.['required']">Department is required.</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="employee_photo">Employee Photo:</label>
+          <input type="file" id="employee_photo" (change)="onFileSelected($event)">
+          <div *ngIf="previewUrl" class="image-preview">
+            <img [src]="previewUrl" alt="Employee Photo" style="max-width: 100px; max-height: 100px;">
+          </div>
+        </div>
+  
+        <div class="modal-actions">
+          <button type="submit" [disabled]="employeeForm.invalid">{{ isEditMode ? 'Update' : 'Save' }}</button>
+          <button type="button" (click)="onClose()">Cancel</button>
+        </div>
+  
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      </form>
+    </div>
+  </div>

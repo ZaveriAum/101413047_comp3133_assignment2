@@ -85,45 +85,41 @@ export class EmployeeAddEditComponent implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
-    if (this.employeeForm.valid) {
-      const formData = new FormData();
-      formData.append('operations', JSON.stringify({
-        query: this.isEditMode
-          ? `mutation UpdateEmployee($eid: ID!, $input: UpdateEmployeeInput!) { updateEmployee(eid: $eid, input: $input) { id first_name last_name email gender designation salary date_of_joining department employee_photo createdAt updatedAt } }`
-          : `mutation AddEmployee($input: AddEmployeeInput!) { addEmployee(input: $input) { id first_name last_name email gender designation salary date_of_joining department employee_photo createdAt updatedAt } }`,
-        variables: {
-          eid: this.employeeId,
-          input: this.employeeForm.value,
-        },
-      }));
-      if (this.selectedFile) {
-        formData.append('employee_photo', this.selectedFile);
-      }
-
-      let apiCall: Observable<AddEmployeeResponse | UpdateEmployeeResponse>;
-      if (this.isEditMode) {
-        apiCall = this.employeeService.updateEmployee(this.employeeId!, this.employeeForm.value, this.selectedFile ? this.selectedFile : undefined);
-      } else {
-        apiCall = this.employeeService.addEmployee(this.employeeForm.value, this.selectedFile ? this.selectedFile : undefined);
-      }
-
-      apiCall.subscribe({
-        next: (response: AddEmployeeResponse | UpdateEmployeeResponse) => {
-          this.employeeSaved.emit();
-          this.employeeForm.reset();
-          this.previewUrl = null;
-          this.selectedFile = null;
-          alert(this.isEditMode ? 'Employee updated successfully!' : 'Employee added successfully!');
-        },
-        error: (error: any) => {
-          this.errorMessage = error.error.errors?.[0]?.message || error.message || (this.isEditMode ? 'Failed to update employee.' : 'Failed to add employee.');
-          console.error('Error:', error);
-        },
-      });
+    if (this.employeeForm.invalid) return;
+  
+    const formValue = this.employeeForm.value;
+  
+    const input = {
+      first_name: formValue.first_name,
+      last_name: formValue.last_name,
+      email: formValue.email,
+      gender: formValue.gender,
+      designation: formValue.designation,
+      salary: Number(formValue.salary),
+      date_of_joining: formValue.date_of_joining,
+      department: formValue.department,
+    };
+  
+    let apiCall: Observable<AddEmployeeResponse | UpdateEmployeeResponse>;
+  
+    if (this.isEditMode && this.employeeId) {
+      apiCall = this.employeeService.updateEmployee(this.employeeId, input, this.selectedFile || undefined);
     } else {
-      this.errorMessage = 'Please fill out all required fields correctly.';
+      apiCall = this.employeeService.addEmployee(input, this.selectedFile || undefined);
     }
+  
+    apiCall.subscribe({
+      next: () => {
+        this.employeeSaved.emit();
+        this.close.emit();
+      },
+      error: (error) => {
+        console.error('Error saving employee:', error);
+        this.errorMessage = 'Failed to save employee. Please try again.';
+      }
+    });
   }
+  
 
   onClose(): void {
     this.close.emit();

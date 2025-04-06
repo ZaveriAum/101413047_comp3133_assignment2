@@ -35,18 +35,6 @@ interface GetEmployeeDesignationOrDepartmentData {
   getEmployeeDesignationOrDepartment: Employee[];
 }
 
-interface AddEmployeeData {
-  addEmployee: Employee;
-}
-
-interface UpdateEmployeeData {
-  updateEmployee: Employee;
-}
-
-interface DeleteEmployeeData {
-  deleteEmployee: boolean;
-}
-
 export type GetEmployeesResponse = GraphQLResponse<GetEmployeesData>;
 export type GetEmployeeResponse = GraphQLResponse<GetEmployeeData>;
 export type GetEmployeeDesignationOrDepartmentResponse = GraphQLResponse<GetEmployeeDesignationOrDepartmentData>;
@@ -95,10 +83,19 @@ export class EmployeeService {
 
   addEmployee(input: Omit<Employee, 'id' | 'createdAt' | 'updatedAt' | 'employee_photo'>, employee_photo?: File): Observable<AddEmployeeResponse> {
     const formData = new FormData();
-    formData.append('operations', JSON.stringify({
-      query: `mutation AddEmployee($input: AddEmployeeInput!) { addEmployee(input: $input) { id first_name last_name email gender designation salary date_of_joining department employee_photo createdAt updatedAt } }`,
-      variables: { input },
-    }));
+    formData.append('query',
+      `mutation{ addEmployee(input: {
+        first_name: "${input.first_name}"
+        last_name: "${input.last_name}"
+        email: "${input.email}"
+        gender: "${input.gender}"
+        designation: "${input.designation}"
+        salary: ${input.salary}
+        date_of_joining: "${input.date_of_joining}"
+        department: "${input.department}"
+        employee_photo: null
+      }) { id first_name last_name email gender designation salary date_of_joining department employee_photo createdAt updatedAt } }`,
+    );
     if (employee_photo) {
       formData.append('employee_photo', employee_photo);
     }
@@ -107,10 +104,19 @@ export class EmployeeService {
 
   updateEmployee(eid: string, input: Partial<Omit<Employee, 'id' | 'createdAt' | 'updatedAt' | 'employee_photo'>>, employee_photo?: File): Observable<UpdateEmployeeResponse> {
     const formData = new FormData();
-    formData.append('operations', JSON.stringify({
-      query: `mutation UpdateEmployee($eid: ID!, $input: UpdateEmployeeInput!) { updateEmployee(eid: $eid, input: $input) { id first_name last_name email gender designation salary date_of_joining department employee_photo createdAt updatedAt } }`,
-      variables: { eid, input },
-    }));
+    formData.append('query',
+      `mutation{ updateEmployee(eid: "${eid}", input: {
+        first_name: "${input.first_name}"
+        last_name: "${input.last_name}"
+        email: "${input.email}"
+        gender: "${input.gender}"
+        designation: "${input.designation}"
+        salary: ${input.salary}
+        date_of_joining: "${input.date_of_joining}"
+        department: "${input.department}"
+        employee_photo: null
+      }) { id first_name last_name email gender designation salary date_of_joining department employee_photo createdAt updatedAt } }`,
+    );
     if (employee_photo) {
       formData.append('employee_photo', employee_photo);
     }
